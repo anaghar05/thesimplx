@@ -1,6 +1,6 @@
 // ============================================================
 // auth.js — Google OAuth login / logout / session validation
-// Depends on drive.js (accessToken, STATE, showLoader, hideLoader)
+// Depends on drive.js (accessToken, STATE, showLoader, hideLoader, initDriveStructure)
 //           storage.js (loadJson, saveJson)
 // ============================================================
 
@@ -46,7 +46,9 @@ async function validateAdminSession() {
         console.log('[auth.js] STATE.catalogFolderId =', STATE.catalogFolderId);
         if (!STATE.catalogFolderId) {
             console.log('[auth.js] Drive structure not initialized, initializing now...');
+            // Call initDriveStructure from drive.js
             await initDriveStructure();
+            console.log('[auth.js] Drive structure initialized, STATE:', STATE);
         }
 
         // 1. Fetch the signed-in user's email from Google
